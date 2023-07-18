@@ -24,22 +24,24 @@ module "public_subnets" {
   source              = "./modules/subnet"
   vpc_id              = module.vpc.vpc_id
   subnet_cidr_blocks  = var.public_subnet_cidr_blocks
+  map_public_ip       = true
 }
 
 module "private_subnets" {
-  source              = "./modules/subnet"
-  vpc_id              = module.vpc.vpc_id
-  subnet_cidr_blocks  = var.private_subnet_cidr_blocks
+  source             = "./modules/subnet"
+  vpc_id             = module.vpc.vpc_id
+  subnet_cidr_blocks = var.private_subnet_cidr_blocks
+  map_public_ip      = false
 }
 
 module "public_ec2_instances" {
-  source           = "./modules/ec2"
-  subnet_ids       = module.public_subnets.subnet_ids
-  ami_id           = var.ami_id
+  source                  = "./modules/ec2"
+  subnet_ids              = module.public_subnets.subnet_ids
+  ami_id                  = var.ami_id
 }
 
 module "private_ec2_instances" {
-  source           = "./modules/ec2"
-  subnet_ids       = module.private_subnets.subnet_ids
-  ami_id           = var.ami_id
+  source                  = "./modules/ec2"
+  subnet_ids              = module.private_subnets.subnet_ids
+  ami_id                  = var.ami_id
 }

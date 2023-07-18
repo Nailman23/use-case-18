@@ -1,6 +1,6 @@
 variable "subnet_ids" {
   description = "IDs of the subnets"
-  type        = list(string)
+  type        = map(string)
 }
 
 variable "ami_id" {
